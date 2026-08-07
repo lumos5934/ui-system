@@ -12,14 +12,24 @@ UISystem은 UI 프리팹의 생성과 재사용을 관리하는 클래스 입니
 
 ## 🔧 Usage
 
-부트스트랩 단계에서 프리팹을 등록 후 UISystem 을 통해 접근합니다.
+UIBase 를 상속받는 클래스를 작성합니다.
+
+```cs
+public class Inventory : UIBase
+```
+
+<br>
+<br>
+
+사전에 프리팹을 등록 후 UISystem.Instance 를 통해 접근합니다.
+
 
 ```csharp
-UISystem.RegisterPrefab(inventoryPrefab);
+UISystem.Instance.RegisterPrefab(inventoryPrefab);
 
-var inventory = UISystem.Open<Inventory>();
+var inventory = UISystem.Instance.Open<Inventory>();
 
-UISystem.Close<Inventory>();
+UISystem.Instance.Close<Inventory>();
 
 ```
 
