@@ -1,0 +1,11 @@
+{
+  "name": "com.llib.uisystem",
+  "version": "1.0.0",
+  "displayName": "UI System",
+  "description": "프로젝트 내 UI 의 생성과 열고 닫음, 조회를 담당합니다",
+  "unity": "2022.0",
+  "author": {
+    "name": "LUMOS",
+    "email": "lumos5934@gmail.com"
+  }
+}
