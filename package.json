@@ -1,5 +1,5 @@
 {
-  "name": "com.llib.uisystem",
+  "name": "com.llib.ui",
   "version": "1.0.0",
   "displayName": "UI System",
   "description": "프로젝트 내 UI 의 생성과 열고 닫음, 조회를 담당합니다",

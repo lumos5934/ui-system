@@ -50,6 +50,14 @@ namespace LLib
 
             ui.OnClose();
         }
+        
+        public void Close<T>(T target) where T : UIBase
+        {
+            if (!_instanceMap.TryGetValue(target.GetType(), out var ui))
+                return;
+
+            ui.OnClose();
+        }
 
         public bool TryGet<T>(out T ui) where T : UIBase
         {
