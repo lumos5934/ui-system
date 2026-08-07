@@ -13,12 +13,12 @@ namespace LLib
         {
             Canvas = GetComponent<Canvas>();
             
-            UISystem.RegisterInstance(this);
+            UISystem.Instance.RegisterInstance(this);
         }
 
         protected virtual void OnDestroy()
         {
-            UISystem.UnregisterInstance(this);
+            UISystem.Instance.UnregisterInstance(this);
         }
 
         public abstract void OnOpen();

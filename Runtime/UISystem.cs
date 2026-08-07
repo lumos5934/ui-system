@@ -3,23 +3,25 @@ using System.Collections.Generic;
 
 namespace LLib
 {
-    public static class UISystem
+    public class UISystem
     {
-        private static readonly Dictionary<Type, UIBase> _prefabMap = new();
-        private static readonly Dictionary<Type, UIBase> _instanceMap = new();
+        public static UISystem Instance = new UISystem();
+        
+        private readonly Dictionary<Type, UIBase> _prefabMap = new();
+        private readonly Dictionary<Type, UIBase> _instanceMap = new();
 
 
-        public static void RegisterPrefab(UIBase prefab)
+        public void RegisterPrefab(UIBase prefab)
         {
             _prefabMap[prefab.GetType()] = prefab;
         }
 
-        internal static void RegisterInstance(UIBase ui)
+        internal void RegisterInstance(UIBase ui)
         {
             _instanceMap[ui.GetType()] = ui;
         }
 
-        internal static void UnregisterInstance(UIBase ui)
+        internal void UnregisterInstance(UIBase ui)
         {
             if (_instanceMap.TryGetValue(ui.GetType(), out var current) && current == ui)
             {
@@ -27,7 +29,7 @@ namespace LLib
             }
         }
 
-        public static T Open<T>() where T : UIBase
+        public T Open<T>() where T : UIBase
         {
             var type = typeof(T);
 
@@ -41,7 +43,7 @@ namespace LLib
             return (T)ui;
         }
 
-        public static void Close<T>() where T : UIBase
+        public void Close<T>() where T : UIBase
         {
             if (!_instanceMap.TryGetValue(typeof(T), out var ui))
                 return;
@@ -49,7 +51,7 @@ namespace LLib
             ui.OnClose();
         }
 
-        public static bool TryGet<T>(out T ui) where T : UIBase
+        public bool TryGet<T>(out T ui) where T : UIBase
         {
             if (_instanceMap.TryGetValue(typeof(T), out var value))
             {
@@ -61,12 +63,12 @@ namespace LLib
             return false;
         }
 
-        public static T Get<T>() where T : UIBase
+        public T Get<T>() where T : UIBase
         {
             return TryGet(out T ui) ? ui : null;
         }
 
-        private static UIBase Create(Type type)
+        private UIBase Create(Type type)
         {
             if (!_prefabMap.TryGetValue(type, out var prefab))
             {
