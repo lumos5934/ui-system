@@ -51,8 +51,9 @@ UISystem.Instance.Close<Inventory>();
 
 ### UIBase
 
-**`Canvas`** : `Awake()`에서 캐싱되는 컴포넌트. `RequireComponent`로 보장됩니다. <br>
+**`recttransform`** : `Awake()`에서 캐싱되는 RectTransform컴포넌트. <br>
 **`IsOpened`** : 현재 열림 상태를 나타내는 추상 프로퍼티. 구현체가 직접 상태를 관리해야 합니다. <br>
 **`OnOpen()` / `OnClose()`** : 실제 표시/숨김, 애니메이션 등 열고 닫는 동작을 구현체가 정의하는 추상 메서드. `UISystem`은 호출만 하고 방법은 관여하지 않습니다. <br>
+**`EndUpdate`** : 매프레임 `WaitForEndOfFrame`에 호출되는 메서드 입니다. <br>
 
 <br>
