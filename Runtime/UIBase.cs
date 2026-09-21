@@ -1,19 +1,38 @@
+using System.Collections;
 using UnityEngine;
 
 namespace LLib
 {
-    [RequireComponent(typeof(Canvas))]
     public abstract class UIBase : MonoBehaviour
     {
-        public Canvas Canvas { get; private set; }
+        [HideInInspector] public RectTransform rectTransform;
+        private Coroutine _endUpdateCoroutine;
 
-        public abstract bool IsOpened { get; }
+        public virtual bool IsOpened => gameObject.activeSelf;
+        
 
         protected virtual void Awake()
         {
-            Canvas = GetComponent<Canvas>();
-            
+            rectTransform = GetComponent<RectTransform>();
             UISystem.Instance.RegisterInstance(this);
+        }
+        
+        protected virtual void EndUpdate()
+        {
+        }
+        
+        protected virtual void OnEnable()
+        {
+            _endUpdateCoroutine = StartCoroutine(EndUpdateCoroutine());
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (_endUpdateCoroutine != null)
+            {
+                StopCoroutine(_endUpdateCoroutine);
+                _endUpdateCoroutine = null;
+            }
         }
 
         protected virtual void OnDestroy()
@@ -21,7 +40,24 @@ namespace LLib
             UISystem.Instance.UnregisterInstance(this);
         }
 
-        public abstract void OnOpen();
-        public abstract void OnClose();
+        public virtual void OnOpen()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public virtual void OnClose()
+        {
+            gameObject.SetActive(false);
+        }
+        
+        private IEnumerator EndUpdateCoroutine()
+        {
+            while (true)
+            {
+                yield return new WaitForEndOfFrame();
+
+                EndUpdate();
+            }
+        }
     }
 }
